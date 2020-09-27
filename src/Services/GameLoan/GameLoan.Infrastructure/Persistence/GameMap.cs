@@ -3,11 +3,11 @@ using MongoDB.Bson.Serialization;
 
 namespace GameLoan.Infrastructure.Persistence
 {
-    public class UserMap
+    public class GameMap
     {
         public static void Configure()
         {
-            BsonClassMap.RegisterClassMap<User>(map =>
+            BsonClassMap.RegisterClassMap<Game>(map =>
             {
                 map.AutoMap();
                 map.SetIgnoreExtraElements(true);

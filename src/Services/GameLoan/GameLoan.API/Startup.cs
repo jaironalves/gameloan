@@ -13,6 +13,7 @@ using Microsoft.Extensions.Logging;
 using GameLoan.API.Extensions;
 using GameLoan.Domain.Repository.UnitOfWork;
 using GameLoan.Infrastructure.Repository.UnitOfWork;
+using GameLoan.Domain.Services;
 
 namespace GameLoan.API
 {
@@ -33,6 +34,9 @@ namespace GameLoan.API
             services.AddControllers();
             services.AddSwaggerOpenApi();
             services.AddUnitOfWork(Configuration);
+
+
+            services.AddScoped<GameService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

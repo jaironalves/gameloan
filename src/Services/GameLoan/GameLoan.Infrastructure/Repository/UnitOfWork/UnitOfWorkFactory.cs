@@ -26,7 +26,8 @@ namespace GameLoan.Infrastructure.Repository.UnitOfWork
         private void ConfigureRepositories(RepositoryConfig repositoryConfig)
         {
             repositoryConfig
-                .AddBind<IUserRepository, UserRepository>();
+                .AddBind<IUserRepository, UserRepository>()
+                .AddBind<IGameRepository, GameRepository>();
         }
 
         public void Dispose()

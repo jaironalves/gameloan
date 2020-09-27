@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 
 namespace GameLoan.API.Controllers
 {
-  [ApiController]
+    [ApiController]
     [Authorize]
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase

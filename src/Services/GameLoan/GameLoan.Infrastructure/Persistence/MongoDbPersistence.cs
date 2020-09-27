@@ -9,9 +9,11 @@ namespace GameLoan.Infrastructure.Persistence
     {
         internal static void Configure()
         {
-            UserMap.Configure();
-
             BsonSerializer.RegisterSerializer(new GuidSerializer(GuidRepresentation.CSharpLegacy));
+
+            BaseEntityMap.Configure();
+            UserMap.Configure();
+            GameMap.Configure();            
 
             var pack = new ConventionPack
                 {
