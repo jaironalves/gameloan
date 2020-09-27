@@ -11,6 +11,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using GameLoan.API.Extensions;
+using GameLoan.Domain.Repository.UnitOfWork;
+using GameLoan.Infrastructure.Repository.UnitOfWork;
 
 namespace GameLoan.API
 {
@@ -29,7 +31,8 @@ namespace GameLoan.API
             services.AddConfigurationOptions(Configuration);
             services.AddJwtBearerSecurity(Configuration);
             services.AddControllers();
-            services.AddSwaggerOpenApi();            
+            services.AddSwaggerOpenApi();
+            services.AddUnitOfWork(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -12,4 +12,8 @@
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.8" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GameLoan.Domain\GameLoan.Domain.csproj" />
+    <ProjectReference Include="..\GameLoan.Infrastructure\GameLoan.Infrastructure.csproj" />
+  </ItemGroup>
 </Project>
