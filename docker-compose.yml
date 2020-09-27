@@ -1,0 +1,48 @@
+# Please refer https://aka.ms/HTTPSinContainer on how to setup an https developer certificate for your ASP .NET Core service.
+
+version: '3.4'
+
+networks:
+  gameloannet:
+    name: gameloannet
+    external: false
+
+volumes:
+  aspnet_volume:
+  mongodb_volume:
+    driver: local
+
+services:
+  mongo:
+    image: mongo
+    container_name: mongodb
+    hostname: mongodb    
+    restart: always
+    networks:
+      - gameloannet
+    volumes:
+      - "mongodb_volume:/data/db"      
+    ports:
+      - "9700:27017"
+
+  gameloanapi:    
+    image: gameloanapi
+    container_name: gameloanapi
+    build:
+      context: src/Services/GameLoan/GameLoan.API
+    ports:
+      - "9000:80"
+      - "9001:443"
+    environment:      
+      - ASPNETCORE_ENVIRONMENT=Development 
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_HTTPS_PORT=9001
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=secret-pass
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetcore.pfx
+    volumes:
+      - "aspnet_volume:/root/.aspnet"
+      - .aspnet/https:/https:ro  
+    networks:
+      - gameloannet    
+    depends_on: 
+      - mongo   

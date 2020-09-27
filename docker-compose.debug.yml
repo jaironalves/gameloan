@@ -1,0 +1,22 @@
+# Please refer https://aka.ms/HTTPSinContainer on how to setup an https developer certificate for your ASP .NET Core service.
+
+version: '3.4'
+
+services:
+  gameloanapi:
+    image: gameloanapi
+    build:
+      context: .
+      dockerfile: src/Services/GameLoan/GameLoan.API/Dockerfile
+    ports:
+      - "8000:80"
+      - "8001:443"
+    environment:      
+      - ASPNETCORE_ENVIRONMENT=Development 
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_HTTPS_PORT=8001
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=secret-pass
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/GameLoan.API.pfx
+    volumes:
+      - ~/.aspnet/https:/https:ro   
+      - ~/.vsdbg:/remote_debugger:rw
