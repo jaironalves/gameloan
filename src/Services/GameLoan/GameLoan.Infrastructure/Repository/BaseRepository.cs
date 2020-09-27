@@ -7,7 +7,7 @@ using MongoDB.Driver;
 
 namespace GameLoan.Infrastructure.Repository
 {
-    public abstract class BaseRepository<TEntity, TKey> : UnitOfWorkRepository, IRepository<TEntity, TKey> where TEntity : BaseEntity<TKey>
+    public abstract class BaseRepository<TEntity, TKey> : UnitOfWorkRepository, IRepository<TEntity, TKey> where TEntity : class
     {
         private IMongoCollection<TEntity> _collection;        
 
@@ -24,9 +24,9 @@ namespace GameLoan.Infrastructure.Repository
             Context.AddCommand(() => Collection.InsertOneAsync(obj));
         }
 
-        public async Task<TEntity> GetByIdAsync(TKey id)
+        public async Task<TEntity> GetByKeyAsync(TKey key)
         {            
-            var data = await Collection.FindAsync(Builders<TEntity>.Filter.Eq("_id", id));
+            var data = await Collection.FindAsync(Builders<TEntity>.Filter.Eq("_id", key));
             return data.SingleOrDefault();
         }
 
@@ -36,14 +36,14 @@ namespace GameLoan.Infrastructure.Repository
             return all.ToList();
         }
 
-        public virtual void Update(TEntity obj)
+        public virtual void Update(TKey key, TEntity obj)
         {            
-            Context.AddCommand(() => Collection.ReplaceOneAsync(Builders<TEntity>.Filter.Eq("_id", obj.Id), obj));
+            Context.AddCommand(() => Collection.ReplaceOneAsync(Builders<TEntity>.Filter.Eq("_id", key), obj));
         }
 
-        public virtual void Remove(TKey id)
+        public virtual void Remove(TKey key)
         {           
-            Context.AddCommand(() => Collection.DeleteOneAsync(Builders<TEntity>.Filter.Eq("_id", id)));
+            Context.AddCommand(() => Collection.DeleteOneAsync(Builders<TEntity>.Filter.Eq("_id", key)));
         }
 
         public void Dispose()

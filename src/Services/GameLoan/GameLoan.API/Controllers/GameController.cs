@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using GameLoan.Domain.Entities;
@@ -23,11 +24,45 @@ namespace GameLoan.API.Controllers
             return await _service.GetAllAsync();
         }
 
-        [HttpPost]
-        public async Task<ActionResult> Post([FromBody]Game game)
+        [HttpGet("{id}", Name = "Get")]
+        public async Task<ActionResult<Game>> Get(Guid id)
         {
-            var inserted = await _service.AddGameAsync(game);
-            return Ok(inserted);
+            var game = await _service.GetAsync(id);
+
+            if (game is null)
+                return NotFound("Jogo não encontrado");
+
+            return game;
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<Game>> Post([FromBody] Game game)
+        {
+            var inserted = await _service.AddAsync(game);
+            return CreatedAtRoute("Get", new { id = game.Id }, game);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult<Game>> Put(Guid id, [FromBody] Game game)
+        {
+            var gameUpdate = await _service.GetAsync(id);
+            if (gameUpdate is null)
+                return NotFound("Jogo não encontrado");
+
+            gameUpdate.Name = game.Name;
+
+            await _service.UpdateAsync(gameUpdate);
+            return CreatedAtRoute("Get", new { id = gameUpdate.Id }, gameUpdate);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete(Guid id)
+        {
+            var game = await _service.GetAsync(id);
+            if (game is null)
+                return NotFound("Jogo não encontrado");
+            await _service.RemoveAsync(game);
+            return NoContent();
         }
     }
 }

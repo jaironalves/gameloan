@@ -1,17 +1,16 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using GameLoan.Domain.Entities;
 using GameLoan.Domain.Repository.UnitOfWork;
 
 namespace GameLoan.Domain.Repository
-{   
-    public interface IRepository<TEntity, TKey> : IUnitOfWorkRepository, IDisposable where TEntity : BaseEntity<TKey>
+{
+    public interface IRepository<TEntity, TKey> : IUnitOfWorkRepository, IDisposable where TEntity : class
     {
         void Add(TEntity obj);
-        Task<TEntity> GetByIdAsync(TKey id);
+        Task<TEntity> GetByKeyAsync(TKey key);
         Task<IEnumerable<TEntity>> GetAllAsync();
-        void Update(TEntity obj);
-        void Remove(TKey id);
+        void Update(TKey key, TEntity obj);
+        void Remove(TKey key);
     }
 }

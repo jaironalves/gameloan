@@ -2,8 +2,9 @@ using System;
 
 namespace GameLoan.Domain.Entities
 {
-    public class Game : BaseEntity<Guid>
-    {      
+    public class Game
+    {
+        public Guid Id { get; set; }
         public string Name { get; set; }
     }
 }

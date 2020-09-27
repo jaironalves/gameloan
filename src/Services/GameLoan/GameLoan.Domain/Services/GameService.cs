@@ -23,7 +23,7 @@ namespace GameLoan.Domain.Services
             return gameRepository.GetAllAsync();
         }
 
-        public async Task<Game> AddGameAsync(Game game)
+        public async Task<Game> AddAsync(Game game)
         {
             using var unitOfWork = _unitOfWorkFactory.CreateNew();
             var gameRepository = unitOfWork.Repository<IGameRepository>();
@@ -31,6 +31,29 @@ namespace GameLoan.Domain.Services
             gameRepository.Add(game);
             await unitOfWork.CommitAsync();
             return game;
+        }
+
+        public async Task<Game> GetAsync(Guid gameId)
+        {
+            using var unitOfWork = _unitOfWorkFactory.CreateNew();
+            var gameRepository = unitOfWork.Repository<IGameRepository>();
+            return await gameRepository.GetByKeyAsync(gameId);
+        }
+
+        public async Task UpdateAsync(Game game)
+        {
+            using var unitOfWork = _unitOfWorkFactory.CreateNew();
+            var gameRepository = unitOfWork.Repository<IGameRepository>();
+            gameRepository.Update(game.Id, game);
+            await unitOfWork.CommitAsync();
+        }
+
+        public async Task RemoveAsync(Game game)
+        {
+            using var unitOfWork = _unitOfWorkFactory.CreateNew();
+            var gameRepository = unitOfWork.Repository<IGameRepository>();
+            gameRepository.Remove(game.Id);
+            await unitOfWork.CommitAsync();
         }
     }
 }
