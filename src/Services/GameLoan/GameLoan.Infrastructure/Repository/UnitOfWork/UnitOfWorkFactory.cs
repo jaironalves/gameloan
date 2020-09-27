@@ -20,7 +20,7 @@ namespace GameLoan.Infrastructure.Repository.UnitOfWork
             var repositoryConfig = new RepositoryConfig();
             ConfigureRepositories(repositoryConfig);           
 
-            return new UnitOfWork(_factoryConfig.Connection, _factoryConfig.Database, repositoryConfig);
+            return new UnitOfWork(_factoryConfig.Connection, _factoryConfig.Database, _factoryConfig.SupportTransaction, repositoryConfig);
         }
 
         private void ConfigureRepositories(RepositoryConfig repositoryConfig)

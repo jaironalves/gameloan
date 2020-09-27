@@ -4,5 +4,6 @@ namespace GameLoan.Infrastructure.Repository.Config
     {
         public string Connection { get; set; }
         public string Database { get; set; }
+        public bool SupportTransaction { get; set; }
     }
 }
