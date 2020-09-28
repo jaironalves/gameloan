@@ -4,7 +4,7 @@ import { SessionService } from './sessionService'
 class LoanService extends BaseService {
   constructor() {
     super()
-    this.session = new SessionService()
+    this.session = new SessionService()    
   }
 
   headerAuthorization = () => ({ Authorization: `Bearer ${this.session.getToken()}` })
@@ -35,11 +35,19 @@ class LoanService extends BaseService {
     })
   }
 
-  listAuthorization = async (params) => {
+  listGames = async (params) => {
     const api = this.createApi()
-    return api.get('/partner/authorization', {
+    return api.get('api/game', {
       headers: { ...this.headerAuthorization() },
       params,
+    })
+  }
+
+  deleteGame = async (gameId) => {
+    console.log(gameId)
+    const api = this.createApi()
+    return api.delete(`api/game/${gameId}`, {
+      headers: { ...this.headerAuthorization() },      
     })
   }
 

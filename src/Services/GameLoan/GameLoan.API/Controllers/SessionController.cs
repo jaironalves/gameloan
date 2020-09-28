@@ -33,7 +33,7 @@ namespace GameLoan.API.Controllers
 
             var userLogin = await _sessionService.GetByLoginAsync(request.Login);
 
-            if ((userLogin is null) && (request.Login == "test"))
+            if ((userLogin is null) && (request.Login == "teste"))
             {
                 userLogin = await _sessionService.AddDefaultAsync("Teste", request.Login, request.Login);
             }

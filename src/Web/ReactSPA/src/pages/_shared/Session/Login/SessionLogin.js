@@ -41,14 +41,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const SessionLogin = ({ className, type }) => {
+const SessionLogin = ({ className }) => {
   const classes = useStyles()
   const history = useHistory()
   const location = useLocation()
 
   const { from } = location.state || { from: { pathname: '/' } }
 
-  const { identity, login, session } = useSessionOptions(type)
+  const { identity, login, session } = useSessionOptions()
   const { options: loginOptions } = login
 
   const [state, setState] = useState({
@@ -62,16 +62,10 @@ const SessionLogin = ({ className, type }) => {
   const [error, setError] = useState('')
   const [logging, setLogging] = useState(false)
 
-  const handleChange = (event) => {
-    // const emailOrLoginName = ObjectHelper.propertyName(() => {
-    //   state.emailOrLogin
-    // })
+  const handleChange = (event) => {    
     const targetName = event.target.name
     const targetValue = event.target.type === 'checkbox' ? event.target.checked : event.target.value
-    let targetError = ''
-    // if (loginOptions.useEmail && targetName === emailOrLoginName && !isEmailValid(targetValue)) {
-    //   targetError = 'E-mail inválido - ex: usuario@provedor.com'
-    // }
+    let targetError = ''   
 
     setState({
       ...state,
@@ -120,7 +114,7 @@ const SessionLogin = ({ className, type }) => {
       setError('')
       const postData = login.stateAsPost(state)
       const response = await session.authenticate(postData)
-      session.login(response.data, callBackRedirect)
+      session.login(response.data, callBackRedirect)      
     } catch (catchError) {
       let errorDescription = ''
       // Error

@@ -33,6 +33,7 @@ namespace GameLoan.API
             services.AddHttpContextAccessor();
             services.AddConfigurationOptions(Configuration);
             services.AddJwtBearerSecurity(Configuration);
+            services.AddCors();
             services.AddControllers();
             services.AddSwaggerOpenApi();
             services.AddUnitOfWork(Configuration);
@@ -47,6 +48,12 @@ namespace GameLoan.API
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors(
+                options => options.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+            );
 
             app.UseHttpsRedirection();
 

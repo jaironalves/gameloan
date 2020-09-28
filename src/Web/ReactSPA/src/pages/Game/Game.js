@@ -3,30 +3,32 @@ import { Switch, Redirect, Route } from 'react-router-dom'
 import RouteWithLayout from 'src/components/RouteWithLayout'
 import { makePrivateLayout } from 'src/layouts'
 import DashboardIcon from '@material-ui/icons/Dashboard'
+import { SessionService } from 'services'
 
-import Dashboard from './Dashboard'
+import Games from './Games'
 import NotFound from 'pages/NotFound'
 
-const pathBase = '/patrocinador'
+const pathBase = '/jogos'
 const paths = {
   base: pathBase,
-  dashboard: `${pathBase}/painel`,
+  dashboard: `${pathBase}/prateleira`,
   notfound: `${pathBase}/notfound`,
 }
 
 const pages = [
   {
-    title: 'Painel',
+    title: 'Jogos',
     href: paths.dashboard,
     icon: <DashboardIcon />,
   },
 ]
 
 const Sponsor = () => {
-  const [logout] = useState(false)
+  const [logout, setLogout] = useState(false)
 
   const handleLogout = () => {
-    //AuthSponsor.logout(() => setLogout(true))
+    var session = new SessionService();
+    session.logout(() => setLogout(true))    
   }
 
   const Layout = makePrivateLayout(pages, handleLogout)
@@ -36,7 +38,7 @@ const Sponsor = () => {
       {logout ? <Redirect to={paths.base} /> : null}
       <Redirect exact from={paths.base} to={paths.dashboard} />
       <RouteWithLayout
-        component={Dashboard}
+        component={Games}
         exact
         layout={Layout}
         path={paths.dashboard}

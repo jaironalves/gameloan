@@ -2,14 +2,15 @@ import React from 'react'
 import { Route, Redirect } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
-const LoginRoute = ({ component: Component, auth, redirectPath, ...rest }) => (
+const LoginRoute = ({ component: Component, functions, ...rest }) => (
   <Route
     {...rest}
     render={props =>
-      !auth.isAuthenticated() ? (
-        <Component {...{ auth, redirectPath, ...props }} />
+      !functions.isAuthenticated() ? (
+        // <Component {...{ auth, redirectPath, ...props }} />
+        <Component {...props} />
       ) : (
-        <Redirect to={redirectPath} />
+        <Redirect to={`${functions.redirectPath(false)}`} />
       )
     }
   />
@@ -17,8 +18,10 @@ const LoginRoute = ({ component: Component, auth, redirectPath, ...rest }) => (
 
 LoginRoute.propTypes = {
   component: PropTypes.any.isRequired,
-  auth: PropTypes.object.isRequired,
-  redirectPath: PropTypes.string,
+  functions: PropTypes.shape({
+    isAuthenticated: PropTypes.func,
+    redirectPath: PropTypes.func,
+  }),
 }
 
 export default LoginRoute

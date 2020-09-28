@@ -9,10 +9,10 @@ class SessionService extends BaseService {
     super()
     this.TOKEN_KEY = `@app-auth-token`
     this.USER_KEY = `@app-auth-user`
-    this.BASE_PATH = '/session'
+    this.BASE_PATH = 'api/session'
   }
 
-  authenticate = (data) => this.post(`${this.BASE_PATH}/authenticate`, data)
+  authenticate = (data) => this.post(`${this.BASE_PATH}`, data)
 
   getToken = () => localStorage.getItem(this.TOKEN_KEY)
 
@@ -44,9 +44,9 @@ class SessionService extends BaseService {
    * @param {Object} authResponse.user - The token
    * @param {authCallback} callback - The callback executed after sucess
    */
-  login = (authResponse, callback) => {
-    const { token, user } = authResponse
-    localStorage.setItem(this.TOKEN_KEY, token)
+  login = (authResponse, callback) => {    
+    const { accessToken, user } = authResponse
+    localStorage.setItem(this.TOKEN_KEY, accessToken)
     localStorage.setItem(this.USER_KEY, user)
     if (callback) callback()
   }

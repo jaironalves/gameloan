@@ -8,14 +8,16 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk:${SDK_IMAGE_VERSION} AS build
 WORKDIR /src
-COPY ["GameLoan.API.csproj", "."]
-RUN dotnet restore "GameLoan.API.csproj"
+COPY ["GameLoan.API/GameLoan.API.csproj", "GameLoan.API/GameLoan.API.csproj"]
+COPY ["GameLoan.Domain/GameLoan.Domain.csproj", "GameLoan.Domain/GameLoan.Domain.csproj"]
+COPY ["GameLoan.Infrastructure/GameLoan.Infrastructure.csproj", "GameLoan.Infrastructure/GameLoan.Infrastructure.csproj"]
+RUN dotnet restore "GameLoan.API/GameLoan.API.csproj"
 COPY . .
 WORKDIR /src
-RUN dotnet build "GameLoan.API.csproj" -c Release -o /app
+RUN dotnet build "GameLoan.API/GameLoan.API.csproj" -c Release -o /app
 
 FROM build AS publish
-RUN dotnet publish "GameLoan.API.csproj" -c Release -o /app
+RUN dotnet publish "GameLoan.API/GameLoan.API.csproj" -c Release -o /app
 
 FROM base AS final
 WORKDIR /app

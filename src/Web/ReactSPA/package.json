@@ -2,9 +2,9 @@
   "name": "front-end",
   "description": "front",
   "author": "Jairon Alves Lima",
+  "license": "MIT",
   "scripts": {
-    "prebuild": "webpack --config webpack/webpack.config.prod.babel.js --progress",
-    "build": "node server",
+    "build": "webpack --config webpack/webpack.config.prod.babel.js",    
     "start": "webpack-dev-server --config webpack/webpack.config.dev.babel.js",
     "lint": "eslint --ext .jsx --ext .js src"
   },

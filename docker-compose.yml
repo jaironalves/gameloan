@@ -1,5 +1,3 @@
-# Please refer https://aka.ms/HTTPSinContainer on how to setup an https developer certificate for your ASP .NET Core service.
-
 version: '3.4'
 
 networks:
@@ -29,7 +27,8 @@ services:
     image: gameloanapi
     container_name: gameloanapi
     build:
-      context: src/Services/GameLoan/GameLoan.API
+      context: src/Services/GameLoan
+      dockerfile: GameLoan.API/Dockerfile
     ports:
       - "9000:80"
       - "9001:443"
@@ -45,4 +44,16 @@ services:
     networks:
       - gameloannet    
     depends_on: 
-      - mongo   
+      - mongo
+      
+  gameloanweb:    
+      image: gameloanweb
+      container_name: gameloanweb
+      build:
+        context: src/Web/ReactSPA
+      ports:
+        - "9100:80"              
+      networks:
+        - gameloannet    
+      depends_on: 
+        - gameloanapi      

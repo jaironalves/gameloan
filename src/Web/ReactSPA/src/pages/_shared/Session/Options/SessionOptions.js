@@ -8,8 +8,8 @@ const identityGame = {
 
 const loginGame = {
   options: {
-    useLogin: false,
-    useEmail: true,
+    useLogin: true,
+    useEmail: false,
     useForgot: false,
     useForgotPath: '',
     useRegister: false,

@@ -2,7 +2,7 @@ import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 
 import Home from './pages/Home'
-import { SponsorRoutes, SponsorLogin } from 'pages/Sponsor'
+import { GameRoutes, GameLogin } from 'pages/Game'
 import NotFound from './pages/NotFound'
 
 import PrivateRoute from './components/PrivateRoute'
@@ -26,13 +26,13 @@ const Routes = () => (
   <Switch>
     <Route component={Home} exact path={RoutePaths.Home} />
     <LoginRoute
-      component={SponsorLogin}
+      component={GameLogin}
       functions={GameRouteFunctions}
       path={RoutePaths.GameLogin}
       exact
       redirectPath={RoutePaths.Game}
     />
-    <PrivateRoute component={SponsorRoutes} functions={GameRouteFunctions} path={RoutePaths.Game} />
+    <PrivateRoute component={GameRoutes} functions={GameRouteFunctions} path={RoutePaths.Game} />
     <Route component={NotFound} />
   </Switch>
 )
