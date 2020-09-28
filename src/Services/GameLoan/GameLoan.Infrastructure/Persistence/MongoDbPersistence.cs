@@ -14,6 +14,7 @@ namespace GameLoan.Infrastructure.Persistence
             UserMap.Configure();
             UserLoginMap.Configure();
             GameMap.Configure();
+            FriendMap.Configure();
 
             var pack = new ConventionPack
                 {

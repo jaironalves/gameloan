@@ -12,7 +12,7 @@ namespace GameLoan.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize("Bearer")]
+    [Authorize]
     public class GameController : ControllerBase
     {
         private GameService _gameService;
@@ -45,6 +45,8 @@ namespace GameLoan.API.Controllers
         [HttpPost]
         public async Task<ActionResult<Game>> Post([FromBody] Game game)
         {
+            game.UserId = _userProvider.GetUserId();
+            game.Borrowed = false;
             var inserted = await _gameService.AddAsync(game);
             return CreatedAtRoute("Get", new { id = game.Id }, game);
         }
