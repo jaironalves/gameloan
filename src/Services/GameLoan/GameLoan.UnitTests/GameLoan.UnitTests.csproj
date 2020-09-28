@@ -11,6 +11,13 @@
     <PackageReference Include="xunit" Version="2.4.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
     <PackageReference Include="coverlet.collector" Version="1.2.0" />
+    <PackageReference Include="FluentAssertions" Version="5.10.3" />
+    <PackageReference Include="Moq" Version="4.14.5" />
+    <PackageReference Include="BCrypt.Net-Next" Version="4.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\GameLoan.API\GameLoan.API.csproj" />  
+    <ProjectReference Include="..\GameLoan.Domain\GameLoan.Domain.csproj" />    
+  </ItemGroup>
 </Project>

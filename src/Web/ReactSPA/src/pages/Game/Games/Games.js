@@ -9,20 +9,12 @@ import Card from '@material-ui/core/Card'
 import CardHeader from '@material-ui/core/CardHeader'
 import CardContent from '@material-ui/core/CardContent'
 import Divider from '@material-ui/core/Divider'
-import Table from '@material-ui/core/Table'
-import TableContainer from '@material-ui/core/TableContainer'
-import TableBody from '@material-ui/core/TableBody'
-import TableCell from '@material-ui/core/TableCell'
-import TableHead from '@material-ui/core/TableHead'
-import TableRow from '@material-ui/core/TableRow'
-import Tooltip from '@material-ui/core/Tooltip'
 import Button from '@material-ui/core/Button'
-import IconButton from '@material-ui/core/IconButton'
-import DeleteIcon from '@material-ui/icons/Delete'
-import { StatusBullet } from 'components'
 import { Title } from 'components'
 import { LoanService } from 'services'
 import { useHandleRequest, useDeepEffect } from 'hooks'
+
+import GameList from './List'
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -51,6 +43,7 @@ const useStyles = makeStyles((theme) => ({
 const ACTIONS = {
   NONE: 'NONE',
   DELETE: 'DELETE',
+  EDIT: 'EDIT'
 }
 
 const actionReducer = (state, { type, payload } = {}) => {
@@ -60,26 +53,6 @@ const actionReducer = (state, { type, payload } = {}) => {
     default:
       return state
   }
-}
-
-const statusKey = (game) => {
-  if (game.borrowed) return 'borrowed'
-  return 'available'
-}
-
-const statusColors = {
-  available: 'success',
-  borrowed: 'info',
-}
-
-const statusDescription = {
-  available: 'Na prateleira',
-  borrowed: 'Emprestado',
-}
-
-const statusTooltip = {
-  available: 'Na prateleira',
-  borrowed: 'Emprestado',
 }
 
 const Games = (props) => {
@@ -130,56 +103,8 @@ const Games = (props) => {
     }
   }, [stateAction])
 
-  const renderTable = () => (
-    <TableContainer className={classes.container}>
-      <Table stickyHeader size="small" className={classes.inner}>
-        <TableHead>
-          <TableRow>
-            <TableCell>Status</TableCell>
-            <TableCell>Jogo</TableCell>
-            <TableCell>Emprestado</TableCell>
-            <TableCell />
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {Array.from(data).map((game, index) => (
-            <TableRow hover key={index}>
-              <TableCell>
-                <Tooltip enterDelay={300} title={statusTooltip[statusKey(game)]}>
-                  <div className={classes.statusContainer}>
-                    <StatusBullet
-                      className={classes.status}
-                      color={statusColors[statusKey(game)]}
-                      size="sm"
-                    />
-                    {statusDescription[statusKey(game)]}
-                  </div>
-                </Tooltip>
-              </TableCell>
-              <TableCell>{game.name}</TableCell>
-              <TableCell>{game.borrowedTo ? game.borrowedTo.name : ''}</TableCell>
-              <TableCell>
-                <Tooltip title="Remover">
-                  <IconButton
-                    aria-label="Remover"
-                    size="small"
-                    onClick={() =>
-                      dispatchAction({
-                        type: ACTIONS.DELETE,
-                        payload: game.id,
-                      })
-                    }
-                  >
-                    <DeleteIcon />
-                  </IconButton>
-                </Tooltip>
-              </TableCell>
-              <TableCell align="right"></TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+  const renderList = () => (
+    <GameList data={data} dispatch={dispatchAction} dispatchActionDelete={ACTIONS.DELETE} dispatchActionEdit={ACTIONS.EDIT}/>    
   )
 
   const renderAdd = () => (
@@ -213,7 +138,7 @@ const Games = (props) => {
     </Container>
   )
 
-  const isRender = () => 1 != 2
+  const isRender = () => 1 != 1
 
   return (
     <Grid container spacing={3}>
@@ -223,7 +148,7 @@ const Games = (props) => {
           <Divider />
           <CardContent className={classes.content}>
             <Divider />
-            {isRender() ? renderAdd() : renderTable()}
+            {isRender() ? renderAdd() : renderList()}
           </CardContent>
         </Card>
       </Grid>

@@ -1,5 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using GameLoan.Domain.Services;
+using GameLoan.Domain.Services.Interfaces;
 
 namespace GameLoan.API.Extensions
 {
@@ -7,7 +8,7 @@ namespace GameLoan.API.Extensions
     {
         public static IServiceCollection AddDomainServices(this IServiceCollection services)
         {
-            services.AddScoped<SessionService>();
+            services.AddScoped<ISessionService, SessionService>();
             services.AddScoped<GameService>();
             services.AddScoped<FriendService>();
             services.AddScoped<LoanService>();

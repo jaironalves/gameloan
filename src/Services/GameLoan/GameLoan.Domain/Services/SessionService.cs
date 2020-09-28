@@ -3,10 +3,11 @@ using System.Threading.Tasks;
 using GameLoan.Domain.Entities;
 using GameLoan.Domain.Repository;
 using GameLoan.Domain.Repository.UnitOfWork;
+using GameLoan.Domain.Services.Interfaces;
 
 namespace GameLoan.Domain.Services
 {
-    public class SessionService
+    public class SessionService : ISessionService
     {
         private readonly IUnitOfWorkFactory _unitOfWorkFactory;
 

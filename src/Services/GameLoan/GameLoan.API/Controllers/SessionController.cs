@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using GameLoan.API.JwtBearer;
 using GameLoan.API.Model;
-using GameLoan.Domain.Services;
+using GameLoan.Domain.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,10 +12,10 @@ namespace GameLoan.API.Controllers
     [AllowAnonymous]
     public class SessionController : ControllerBase
     {
-        private SessionService _sessionService;
+        private readonly ISessionService _sessionService;
         private readonly IJwtBearerGenerator _jwtBearerGenerator;
 
-        public SessionController(SessionService sessionService, IJwtBearerGenerator jwtBearerGenerator)
+        public SessionController(ISessionService sessionService, IJwtBearerGenerator jwtBearerGenerator)
         {
             _sessionService = sessionService;
             _jwtBearerGenerator = jwtBearerGenerator;
@@ -23,7 +23,7 @@ namespace GameLoan.API.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<ActionResult<JwtBearerToken>> Authenticate([FromBody] AuthenticateRequest request)
+        public async Task<IActionResult> Authenticate([FromBody] AuthenticateRequest request)
         {
             if (string.IsNullOrWhiteSpace(request.Login))
                 return BadRequest("Login obrigatório"); 
@@ -45,7 +45,7 @@ namespace GameLoan.API.Controllers
             if (!isValidCredentials)
                 return BadRequest("Credenciais inválidas");
 
-            return _jwtBearerGenerator.GenerateToken(userLogin, "User");
+            return Ok(_jwtBearerGenerator.GenerateToken(userLogin, "User"));
         }
     }
 }

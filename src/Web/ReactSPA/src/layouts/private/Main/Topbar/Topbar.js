@@ -5,8 +5,8 @@ import { makeStyles } from '@material-ui/styles'
 import { AppBar, Toolbar, IconButton } from '@material-ui/core'
 import MenuIcon from '@material-ui/icons/Menu'
 import InputIcon from '@material-ui/icons/Input'
-import Logo from 'src/assets/logo.svg'
-import { RouterLink } from 'src/components'
+// import Logo from 'src/assets/logo.svg'
+// import { RouterLink } from 'src/components'
 
 const useStyles = makeStyles(theme => ({
   appBar: {
@@ -70,9 +70,9 @@ const Topbar = ({
             setSidebarOpen={setSidebarOpen}
           />
         )}
-        <RouterLink to="/">
+        {/* <RouterLink to="/">
           <img className={classes.img} alt="Logo" src={Logo} />
-        </RouterLink>
+        </RouterLink> */}
         <div className={classes.grow} />
         {!sidebarPermanent && (
           <RenderMenuButton setSidebarOpen={setSidebarOpen} />

@@ -32,12 +32,12 @@ services:
     ports:
       - "9000:80"
       - "9001:443"
-    environment:      
-      - ASPNETCORE_ENVIRONMENT=Development 
+    environment:
+      - MongoDb:Connection=mongodb://mongodb
       - ASPNETCORE_URLS=https://+:443;http://+:80
       - ASPNETCORE_HTTPS_PORT=9001
       - ASPNETCORE_Kestrel__Certificates__Default__Password=secret-pass
-      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetcore.pfx
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetcore.pfx      
     volumes:
       - "aspnet_volume:/root/.aspnet"
       - .aspnet/https:/https:ro  
@@ -52,7 +52,9 @@ services:
       build:
         context: src/Web/ReactSPA
       ports:
-        - "9100:80"              
+        - "9100:80"
+      environment:
+        - API_BASE_URL=https://localhost:9100                  
       networks:
         - gameloannet    
       depends_on: 
