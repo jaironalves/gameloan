@@ -7,7 +7,7 @@
     <RootNamespace>GameLoan.API</RootNamespace>
     <UserSecretsId>4a6b406d13a1930ed561a98e5809463f</UserSecretsId>
   </PropertyGroup>
-  <ItemGroup>
+  <ItemGroup>    
     <PackageReference Include="Microsoft.AspNetCore.Authentication" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.8" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />

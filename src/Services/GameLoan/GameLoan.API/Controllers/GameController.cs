@@ -1,33 +1,40 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using GameLoan.API.Providers;
 using GameLoan.Domain.Entities;
 using GameLoan.Domain.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GameLoan.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize("Bearer")]
     public class GameController : ControllerBase
     {
-        private GameService _service;
+        private GameService _gameService;
+        private readonly IUserProvider _userProvider;
 
-        public GameController(GameService service)
+        public GameController(GameService gameService, IUserProvider userProvider)
         {
-            _service = service;
+            _gameService = gameService;
+            _userProvider = userProvider;
         }
 
         [HttpGet]
         public async Task<IEnumerable<Game>> Get()
         {
-            return await _service.GetAllAsync();
+            var user = _userProvider.GetUserId();
+            return await _gameService.GetAllAsync();
         }
 
         [HttpGet("{id}", Name = "Get")]
         public async Task<ActionResult<Game>> Get(Guid id)
         {
-            var game = await _service.GetAsync(id);
+            var game = await _gameService.GetAsync(id);
 
             if (game is null)
                 return NotFound("Jogo não encontrado");
@@ -38,30 +45,30 @@ namespace GameLoan.API.Controllers
         [HttpPost]
         public async Task<ActionResult<Game>> Post([FromBody] Game game)
         {
-            var inserted = await _service.AddAsync(game);
+            var inserted = await _gameService.AddAsync(game);
             return CreatedAtRoute("Get", new { id = game.Id }, game);
         }
 
         [HttpPut("{id}")]
         public async Task<ActionResult<Game>> Put(Guid id, [FromBody] Game game)
         {
-            var gameUpdate = await _service.GetAsync(id);
+            var gameUpdate = await _gameService.GetAsync(id);
             if (gameUpdate is null)
                 return NotFound("Jogo não encontrado");
 
             gameUpdate.Name = game.Name;
 
-            await _service.UpdateAsync(gameUpdate);
+            await _gameService.UpdateAsync(gameUpdate);
             return CreatedAtRoute("Get", new { id = gameUpdate.Id }, gameUpdate);
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(Guid id)
         {
-            var game = await _service.GetAsync(id);
+            var game = await _gameService.GetAsync(id);
             if (game is null)
                 return NotFound("Jogo não encontrado");
-            await _service.RemoveAsync(game);
+            await _gameService.RemoveAsync(game);
             return NoContent();
         }
     }

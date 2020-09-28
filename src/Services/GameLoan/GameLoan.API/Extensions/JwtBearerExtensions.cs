@@ -5,6 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using Microsoft.AspNetCore.Authorization;
 using GameLoan.API.Options;
+using GameLoan.API.JwtBearer;
 
 namespace GameLoan.API.Extensions
 {
@@ -43,6 +44,8 @@ namespace GameLoan.API.Extensions
                   .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme‌​)
                   .RequireAuthenticatedUser().Build());
       });
+
+      services.AddScoped<IJwtBearerGenerator, JwtBearerGenerator>();
 
       return services;
     }

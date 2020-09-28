@@ -30,12 +30,14 @@ namespace GameLoan.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRouting(options => options.LowercaseUrls = true);
+            services.AddHttpContextAccessor();
             services.AddConfigurationOptions(Configuration);
             services.AddJwtBearerSecurity(Configuration);
             services.AddControllers();
             services.AddSwaggerOpenApi();
             services.AddUnitOfWork(Configuration);
-            services.AddScoped<GameService>();
+            services.AddDomainServices();
+            services.AddProviders();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -11,9 +11,9 @@ namespace GameLoan.Infrastructure.Persistence
         {
             BsonSerializer.RegisterSerializer(new GuidSerializer(GuidRepresentation.CSharpLegacy));
 
-            //BaseEntityMap.Configure();
             UserMap.Configure();
-            GameMap.Configure();            
+            UserLoginMap.Configure();
+            GameMap.Configure();
 
             var pack = new ConventionPack
                 {

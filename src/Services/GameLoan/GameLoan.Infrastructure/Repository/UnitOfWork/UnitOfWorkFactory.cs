@@ -27,6 +27,7 @@ namespace GameLoan.Infrastructure.Repository.UnitOfWork
         {
             repositoryConfig
                 .AddBind<IUserRepository, UserRepository>()
+                .AddBind<IUserLoginRepository, UserLoginRepository>()
                 .AddBind<IGameRepository, GameRepository>();
         }
 
