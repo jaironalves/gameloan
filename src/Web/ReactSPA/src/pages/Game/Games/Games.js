@@ -3,10 +3,11 @@ import PropTypes from 'prop-types'
 import clsx from 'clsx'
 import { makeStyles } from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
+import TextField from '@material-ui/core/TextField'
+import Container from '@material-ui/core/Container'
 import Card from '@material-ui/core/Card'
 import CardHeader from '@material-ui/core/CardHeader'
 import CardContent from '@material-ui/core/CardContent'
-import Button from '@material-ui/core/Button'
 import Divider from '@material-ui/core/Divider'
 import Table from '@material-ui/core/Table'
 import TableContainer from '@material-ui/core/TableContainer'
@@ -14,14 +15,12 @@ import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
-import ArrowRightIcon from '@material-ui/icons/ArrowRight'
 import Tooltip from '@material-ui/core/Tooltip'
+import Button from '@material-ui/core/Button'
 import IconButton from '@material-ui/core/IconButton'
 import DeleteIcon from '@material-ui/icons/Delete'
-import TextField from '@material-ui/core/TextField'
 import { StatusBullet } from 'components'
 import { Title } from 'components'
-import { RouterLink } from 'src/components'
 import { LoanService } from 'services'
 import { useHandleRequest, useDeepEffect } from 'hooks'
 
@@ -43,6 +42,9 @@ const useStyles = makeStyles((theme) => ({
   },
   actions: {
     justifyContent: 'flex-end',
+  },
+  operationContainer: {
+    marginTop: theme.spacing(3),
   },
 }))
 
@@ -128,79 +130,100 @@ const Games = (props) => {
     }
   }, [stateAction])
 
+  const renderTable = () => (
+    <TableContainer className={classes.container}>
+      <Table stickyHeader size="small" className={classes.inner}>
+        <TableHead>
+          <TableRow>
+            <TableCell>Status</TableCell>
+            <TableCell>Jogo</TableCell>
+            <TableCell>Emprestado</TableCell>
+            <TableCell />
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {Array.from(data).map((game, index) => (
+            <TableRow hover key={index}>
+              <TableCell>
+                <Tooltip enterDelay={300} title={statusTooltip[statusKey(game)]}>
+                  <div className={classes.statusContainer}>
+                    <StatusBullet
+                      className={classes.status}
+                      color={statusColors[statusKey(game)]}
+                      size="sm"
+                    />
+                    {statusDescription[statusKey(game)]}
+                  </div>
+                </Tooltip>
+              </TableCell>
+              <TableCell>{game.name}</TableCell>
+              <TableCell>{game.borrowedTo ? game.borrowedTo.name : ''}</TableCell>
+              <TableCell>
+                <Tooltip title="Remover">
+                  <IconButton
+                    aria-label="Remover"
+                    size="small"
+                    onClick={() =>
+                      dispatchAction({
+                        type: ACTIONS.DELETE,
+                        payload: game.id,
+                      })
+                    }
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                </Tooltip>
+              </TableCell>
+              <TableCell align="right"></TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  )
+
+  const renderAdd = () => (
+    <Container className={classes.operationContainer} maxWidth="sm">
+      <Grid container spacing={1}>
+        <Grid item xs={12}>
+          <TextField
+            autoCapitalize="off"
+            variant="outlined"
+            margin="dense"
+            required
+            fullWidth
+            id="game"
+            label="Jogo"
+            type="text"
+            name="game"
+            placeholder="Novo jogo"
+            autoFocus
+            //onChange={(evt) => handleChange(evt)}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Button color="primary" variant="contained">
+            Adicionar
+          </Button>
+          <Button color="primary" variant="contained">
+            Cancelar
+          </Button>
+        </Grid>        
+      </Grid>
+    </Container>
+  )
+
+  const isRender = () => 1 != 2
+
   return (
     <Grid container spacing={3}>
       <Grid item xs={12}>
-      <TextField variant="outlined" margin="normal" />
         <Card {...rest} className={clsx(classes.root, className)}>
-          <CardHeader
-            title={<Title>Meus Jogos</Title>}
-            action={
-              <Button
-                color="primary"
-                component={RouterLink}
-                size="small"
-                to="vendas"
-                variant="contained"
-              >
-                Ver mais <ArrowRightIcon />
-              </Button>
-            }
-            disableTypography={true}
-          />            
+          <CardHeader title={<Title>Meus Jogos</Title>} disableTypography={true} />
           <Divider />
           <CardContent className={classes.content}>
-            
             <Divider />
-            <TableContainer className={classes.container}>
-              <Table stickyHeader size="small" className={classes.inner}>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Status</TableCell>
-                    <TableCell>Jogo</TableCell>
-                    <TableCell>Emprestado</TableCell>
-                    <TableCell />
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {Array.from(data).map((game, index) => (
-                    <TableRow hover key={index}>
-                      <TableCell>
-                        <Tooltip enterDelay={300} title={statusTooltip[statusKey(game)]}>
-                          <div className={classes.statusContainer}>
-                            <StatusBullet
-                              className={classes.status}
-                              color={statusColors[statusKey(game)]}
-                              size="sm"
-                            />
-                            {statusDescription[statusKey(game)]}
-                          </div>
-                        </Tooltip>
-                      </TableCell>
-                      <TableCell>{game.name}</TableCell>
-                      <TableCell>{game.borrowedTo ? game.borrowedTo.name : ''}</TableCell>
-                      <TableCell>
-                        <Tooltip title="Remover">
-                          <IconButton
-                            aria-label="Remover"
-                            size="small"
-                            onClick={() =>
-                              dispatchAction({
-                                type: ACTIONS.DELETE,
-                                payload: game.id,
-                              })
-                            }
-                          >
-                            <DeleteIcon />
-                          </IconButton>
-                        </Tooltip>
-                      </TableCell>
-                      <TableCell align="right"></TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
+            {isRender() ? renderAdd() : renderTable()}
           </CardContent>
         </Card>
       </Grid>
