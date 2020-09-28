@@ -1,0 +1,37 @@
+{
+  "presets": ["@babel/preset-env"],
+  "overrides": [
+    {
+      "test": ["./src"],
+      "presets": ["@babel/preset-react"],
+      "plugins": [
+        "@babel/plugin-proposal-class-properties",
+        "@babel/plugin-transform-runtime",
+        [
+          "babel-plugin-module-resolver",
+          {
+            "root": ["./src"],
+            "alias": {
+              "src": "./src",
+              "test": "./test",
+              "underscore": "lodash"
+            }
+          }
+        ]
+      ]
+    },
+    {
+      "test": ["./server"],
+      "presets": [
+        [
+          "@babel/preset-env",
+          {
+            "targets": {
+              "node": "current"
+            }
+          }
+        ]
+      ]
+    }
+  ]
+}

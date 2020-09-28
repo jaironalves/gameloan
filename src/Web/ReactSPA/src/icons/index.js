@@ -1,0 +1,6 @@
+export { default as PartnerIcon } from './Partner'
+export { default as ClientIcon } from './Client'
+export { default as RepresentativeIcon } from './Representative'
+export { default as BarCodeIcon } from './BarCode'
+export { default as BilletIcon } from './Billet'
+export { default as SponsorIcon } from './Sponsor'
