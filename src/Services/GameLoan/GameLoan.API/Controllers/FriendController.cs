@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using GameLoan.API.Providers;
 using GameLoan.Domain.Entities;
 using GameLoan.Domain.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -16,26 +14,21 @@ namespace GameLoan.API.Controllers
     public class FriendController : ControllerBase
     {
         private FriendService _friendService;
-        private readonly IUserProvider _userProvider;
 
-        public FriendController(FriendService friendService, IUserProvider userProvider)
+        public FriendController(FriendService friendService)
         {
             _friendService = friendService;
-            _userProvider = userProvider;
         }
 
         [HttpGet]
         public async Task<IEnumerable<Friend>> Get()
         {
-            var user = _userProvider.GetUserId();
             return await _friendService.GetAllAsync();
         }
 
         [HttpPost]
         public async Task<ActionResult<Game>> Post([FromBody] Friend friend)
         {
-            friend.UserId = _userProvider.GetUserId();
-            
             var inserted = await _friendService.AddAsync(friend);
             return CreatedAtRoute("Get", new { id = friend.Id }, friend);
         }

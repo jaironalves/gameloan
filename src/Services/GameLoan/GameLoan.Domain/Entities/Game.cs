@@ -6,7 +6,7 @@ namespace GameLoan.Domain.Entities
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
-        public Guid UserId { get; set; }
         public bool Borrowed { get; set; }
+        public Friend BorrowedTo { get; set; }
     }
 }

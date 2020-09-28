@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Principal;
-using GameLoan.API.Model;
 using GameLoan.API.Options;
 using GameLoan.Domain.Entities;
 using Microsoft.Extensions.Options;

@@ -1,9 +1,6 @@
-using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using GameLoan.API.JwtBearer;
 using GameLoan.API.Model;
-using GameLoan.Domain.Entities;
 using GameLoan.Domain.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

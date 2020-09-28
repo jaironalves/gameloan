@@ -12,8 +12,7 @@ namespace GameLoan.Infrastructure.Persistence
                 map.AutoMap();
                 map.SetIgnoreExtraElements(true);
                 map.MapIdMember(member => member.Id);
-                map.MapMember(member => member.Name).SetIsRequired(true);
-                map.MapMember(member => member.UserId).SetIsRequired(true);
+                map.MapMember(member => member.Name).SetIsRequired(true);                
                 map.MapMember(member => member.Borrowed).SetIsRequired(true);
             });
         }

@@ -10,6 +10,7 @@ namespace GameLoan.API.Extensions
             services.AddScoped<SessionService>();
             services.AddScoped<GameService>();
             services.AddScoped<FriendService>();
+            services.AddScoped<LoanService>();
             return services;
         }
     }

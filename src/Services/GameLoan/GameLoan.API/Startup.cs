@@ -52,6 +52,7 @@ namespace GameLoan.API
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseSwaggerOpenApi();

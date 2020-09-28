@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using GameLoan.API.Providers;
 using GameLoan.Domain.Entities;
 using GameLoan.Domain.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -16,18 +14,15 @@ namespace GameLoan.API.Controllers
     public class GameController : ControllerBase
     {
         private GameService _gameService;
-        private readonly IUserProvider _userProvider;
 
-        public GameController(GameService gameService, IUserProvider userProvider)
+        public GameController(GameService gameService)
         {
             _gameService = gameService;
-            _userProvider = userProvider;
         }
 
         [HttpGet]
         public async Task<IEnumerable<Game>> Get()
         {
-            var user = _userProvider.GetUserId();
             return await _gameService.GetAllAsync();
         }
 
@@ -45,7 +40,6 @@ namespace GameLoan.API.Controllers
         [HttpPost]
         public async Task<ActionResult<Game>> Post([FromBody] Game game)
         {
-            game.UserId = _userProvider.GetUserId();
             game.Borrowed = false;
             var inserted = await _gameService.AddAsync(game);
             return CreatedAtRoute("Get", new { id = game.Id }, game);
