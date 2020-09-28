@@ -1,4 +1,8 @@
 FROM node:12-alpine as build
+ARG API_BASE_URL
+ARG NODE_ENV
+ENV API_BASE_URL=$API_BASE_URL
+ENV NODE_ENV=$NODE_ENV
 WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
 COPY package.json /app/package.json

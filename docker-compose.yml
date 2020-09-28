@@ -46,16 +46,17 @@ services:
     depends_on: 
       - mongo
       
-  gameloanweb:    
-      image: gameloanweb
-      container_name: gameloanweb
-      build:
-        context: src/Web/ReactSPA
-      ports:
-        - "9100:80"
-      environment:
-        - API_BASE_URL=https://localhost:9100                  
-      networks:
-        - gameloannet    
-      depends_on: 
-        - gameloanapi      
+  # gameloanweb:    
+  #     image: gameloanweb
+  #     container_name: gameloanweb
+  #     build:
+  #       context: src/Web/ReactSPA
+  #       args: 
+  #         - API_BASE_URL=https://localhost:9100
+  #         - NODE_ENV=Development
+  #     ports:
+  #       - "9100:80"                       
+  #     networks:
+  #       - gameloannet    
+  #     depends_on: 
+  #       - gameloanapi      
