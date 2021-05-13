@@ -1,62 +1,54 @@
-version: '3.4'
+version: "3.4"
 
 networks:
-  gameloannet:
-    name: gameloannet
+  net:
+    name: gameloan
     external: false
 
 volumes:
-  aspnet_volume:
-  mongodb_volume:
+  mongovolume:
+    name: gameloan-mongo-volume
     driver: local
 
 services:
   mongo:
     image: mongo
-    container_name: mongodb
-    hostname: mongodb    
-    restart: always
+    container_name: gameloan-mongodb
+    hostname: mongodb
     networks:
-      - gameloannet
+      - net
     volumes:
-      - "mongodb_volume:/data/db"      
+      - mongovolume:/data/db
     ports:
-      - "9700:27017"
+      - 9007:27017
 
-  gameloanapi:    
-    image: gameloanapi
-    container_name: gameloanapi
+  api:
+    image: gameloan-api
+    container_name: gameloan-api
     build:
-      context: src/Services/GameLoan
-      dockerfile: GameLoan.API/Dockerfile
+      context: src/Services/GameLoan/
+      dockerfile: Dockerfile
     ports:
-      - "9000:80"
-      - "9001:443"
+      - 9000:80      
     environment:
       - MongoDb:Connection=mongodb://mongodb
-      - ASPNETCORE_URLS=https://+:443;http://+:80
-      - ASPNETCORE_HTTPS_PORT=9001
-      - ASPNETCORE_Kestrel__Certificates__Default__Password=secret-pass
-      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetcore.pfx      
-    volumes:
-      - "aspnet_volume:/root/.aspnet"
-      - .aspnet/https:/https:ro  
+      - ASPNETCORE_URLS=http://+:80
     networks:
-      - gameloannet    
-    depends_on: 
+      - net
+    depends_on:
       - mongo
-      
-  # gameloanweb:    
-  #     image: gameloanweb
-  #     container_name: gameloanweb
-  #     build:
-  #       context: src/Web/ReactSPA
-  #       args: 
-  #         - API_BASE_URL=https://localhost:9100
-  #         - NODE_ENV=Development
-  #     ports:
-  #       - "9100:80"                       
-  #     networks:
-  #       - gameloannet    
-  #     depends_on: 
-  #       - gameloanapi      
+
+  web:
+    image: gameloan-web
+    container_name: gameloan-web
+    build:
+      context: src/Web/ReactSPA
+      args:
+        - API_BASE_URL=http://localhost:9000
+        - NODE_ENV=Development
+    ports:
+      - 9001:80
+    networks:
+      - net
+    depends_on:
+      - api

@@ -1,12 +1,11 @@
-ARG RUNTIME_IMAGE_VERSION=3.1-buster-slim
-ARG SDK_IMAGE_VERSION=3.1-buster
+ARG RUNTIME_IMAGE_VERSION=5.0
+ARG SDK_IMAGE_VERSION=5.0
 
-FROM mcr.microsoft.com/dotnet/core/aspnet:${RUNTIME_IMAGE_VERSION} AS base
+FROM mcr.microsoft.com/dotnet/aspnet:${RUNTIME_IMAGE_VERSION} AS base
 WORKDIR /app
 EXPOSE 80
-EXPOSE 443
 
-FROM mcr.microsoft.com/dotnet/core/sdk:${SDK_IMAGE_VERSION} AS build
+FROM mcr.microsoft.com/dotnet/sdk:${SDK_IMAGE_VERSION} AS build
 WORKDIR /src
 COPY ["GameLoan.API/GameLoan.API.csproj", "GameLoan.API/GameLoan.API.csproj"]
 COPY ["GameLoan.Domain/GameLoan.Domain.csproj", "GameLoan.Domain/GameLoan.Domain.csproj"]
