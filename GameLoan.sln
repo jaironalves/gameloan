@@ -19,11 +19,16 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameLoan.UnitTests", "src\Services\GameLoan\GameLoan.UnitTests\GameLoan.UnitTests.csproj", "{C9610204-7875-49A1-B181-935434F2EBFF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{980717A7-8846-4792-ADCD-4894C8C88335}"
+	ProjectSection(SolutionItems) = preProject
+		README.MD = README.MD
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{F9D195E2-6363-418C-9E21-B801BD227943}"
 	ProjectSection(SolutionItems) = preProject
 		src\Services\GameLoan\coverage.sh = src\Services\GameLoan\coverage.sh
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameLoan.IntegrationTests", "src\Services\GameLoan\GameLoan.IntegrationTests\GameLoan.IntegrationTests.csproj", "{F3F522A0-4861-4786-95EA-589B282E8E6E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -83,6 +88,18 @@ Global
 		{C9610204-7875-49A1-B181-935434F2EBFF}.Release|x64.Build.0 = Release|Any CPU
 		{C9610204-7875-49A1-B181-935434F2EBFF}.Release|x86.ActiveCfg = Release|Any CPU
 		{C9610204-7875-49A1-B181-935434F2EBFF}.Release|x86.Build.0 = Release|Any CPU
+		{F3F522A0-4861-4786-95EA-589B282E8E6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3F522A0-4861-4786-95EA-589B282E8E6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3F522A0-4861-4786-95EA-589B282E8E6E}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{F3F522A0-4861-4786-95EA-589B282E8E6E}.Debug|x64.Build.0 = Debug|Any CPU
+		{F3F522A0-4861-4786-95EA-589B282E8E6E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F3F522A0-4861-4786-95EA-589B282E8E6E}.Debug|x86.Build.0 = Debug|Any CPU
+		{F3F522A0-4861-4786-95EA-589B282E8E6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3F522A0-4861-4786-95EA-589B282E8E6E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3F522A0-4861-4786-95EA-589B282E8E6E}.Release|x64.ActiveCfg = Release|Any CPU
+		{F3F522A0-4861-4786-95EA-589B282E8E6E}.Release|x64.Build.0 = Release|Any CPU
+		{F3F522A0-4861-4786-95EA-589B282E8E6E}.Release|x86.ActiveCfg = Release|Any CPU
+		{F3F522A0-4861-4786-95EA-589B282E8E6E}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -93,6 +110,7 @@ Global
 		{B6ADE48F-6298-4B7F-8CAB-B6B3692EFA50} = {01FB7C65-6F31-4665-BC52-30F487178AB6}
 		{C9610204-7875-49A1-B181-935434F2EBFF} = {3AC41D43-9404-460E-A7C6-EEB87655028A}
 		{F9D195E2-6363-418C-9E21-B801BD227943} = {980717A7-8846-4792-ADCD-4894C8C88335}
+		{F3F522A0-4861-4786-95EA-589B282E8E6E} = {3AC41D43-9404-460E-A7C6-EEB87655028A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {03108257-8786-48CC-AECA-1FE16CA3FF57}
