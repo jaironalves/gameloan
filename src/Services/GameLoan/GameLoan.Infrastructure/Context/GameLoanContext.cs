@@ -12,16 +12,14 @@ namespace GameLoan.Infrastructure.Context
         private IClientSessionHandle Session { get; set; }
 
         private readonly IList<Func<Task>> _commands;
-        private readonly string _connection;
-        private readonly string _database;
+        private readonly string _connection;        
         private readonly bool _supportTransaction;
         private MongoClient _mongoClient;
         private IMongoDatabase _mongoDatabase;
 
-        public GameLoanContext(string connection, string database, bool supportTransaction)
+        public GameLoanContext(string connection, bool supportTransaction)
         {
-            _connection = connection;
-            _database = database;
+            _connection = connection;            
             _supportTransaction = supportTransaction;
             _commands = new List<Func<Task>>();
         }
@@ -33,12 +31,18 @@ namespace GameLoan.Infrastructure.Context
 
         private MongoClient MongoClient
         {
-            get => _mongoClient ?? (_mongoClient = new MongoClient(_connection));
+            get => _mongoClient ??= new MongoClient(_connection);
         }
 
         private IMongoDatabase MongoDatabase
         {
-            get => _mongoDatabase ?? (_mongoDatabase = MongoClient.GetDatabase(_database));
+            get => _mongoDatabase ??= GetMongoDatabase();
+        }
+
+        private IMongoDatabase GetMongoDatabase()
+        {
+            var databaseName = MongoUrl.Create(_connection).DatabaseName;
+            return MongoClient.GetDatabase(databaseName);
         }
 
         private async Task SaveChangesWithTransactionAsync()
@@ -65,7 +69,7 @@ namespace GameLoan.Infrastructure.Context
         {
             if (_supportTransaction)
                 await SaveChangesWithTransactionAsync();
-            else    
+            else
                 await SaveChangesWithoutTransactionAsync();
 
             return _commands.Count;

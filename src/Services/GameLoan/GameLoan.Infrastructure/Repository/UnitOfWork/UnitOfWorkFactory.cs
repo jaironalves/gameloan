@@ -9,18 +9,17 @@ namespace GameLoan.Infrastructure.Repository.UnitOfWork
     {
         private readonly UnitOfWorkFactoryConfig _factoryConfig;
 
-        public UnitOfWorkFactory(Action<UnitOfWorkFactoryConfig> factoryConfigure)
+        public UnitOfWorkFactory(UnitOfWorkFactoryConfig factoryConfig)
         {
-            _factoryConfig = new UnitOfWorkFactoryConfig();
-            factoryConfigure?.Invoke(_factoryConfig);
+            _factoryConfig = factoryConfig;
         }
 
         public IUnitOfWork CreateNew()
         {
             var repositoryConfig = new RepositoryConfig();
-            ConfigureRepositories(repositoryConfig);           
+            ConfigureRepositories(repositoryConfig);
 
-            return new UnitOfWork(_factoryConfig.Connection, _factoryConfig.Database, _factoryConfig.SupportTransaction, repositoryConfig);
+            return new UnitOfWork(_factoryConfig.Connection, _factoryConfig.SupportTransaction, repositoryConfig);
         }
 
         private void ConfigureRepositories(RepositoryConfig repositoryConfig)
@@ -34,7 +33,7 @@ namespace GameLoan.Infrastructure.Repository.UnitOfWork
 
         public void Dispose()
         {
-            
+
         }
     }
 }

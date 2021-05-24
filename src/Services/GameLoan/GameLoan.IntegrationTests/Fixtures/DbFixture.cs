@@ -13,11 +13,11 @@ namespace GameLoan.IntegrationTests.Fixtures
 
         protected readonly MongoDbRunner mongoDbRunner;
 
-        public string ConnectionString =>
-            $"{mongoDbRunner.ConnectionString}{DatabaseName}";
+        public string Connection =>
+            $"{mongoDbRunner.ConnectionString}{DatabaseName}";        
 
         public string RebuildConnectionString(string connectionOptions) =>
-            $"{ConnectionString}?{connectionOptions}";
+            $"{Connection}?{connectionOptions}";
 
         public DbFixture()
         {
@@ -78,9 +78,9 @@ namespace GameLoan.IntegrationTests.Fixtures
 
         private IMongoCollection<TDocument> GetCollection<TDocument>(string collectionName) where TDocument : class
         {
-            var databaseName = MongoUrl.Create(ConnectionString).DatabaseName;
+            var databaseName = MongoUrl.Create(Connection).DatabaseName;
 
-            var client = new MongoClient(ConnectionString);
+            var client = new MongoClient(Connection);
             var database = client.GetDatabase(databaseName);
             return database.GetCollection<TDocument>(collectionName);
         }

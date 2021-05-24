@@ -8,16 +8,14 @@ namespace GameLoan.Infrastructure.Repository.UnitOfWork
 {
     public class UnitOfWork : IUnitOfWork, IDisposable
     {
-        private readonly string _contextConnection;
-        private readonly string _contextDatabase;
+        private readonly string _contextConnection;        
         private readonly bool _contextSupportTransaction;
         private readonly RepositoryConfig _repositoryConfig;
         private IGameLoanContext _context;
 
-        public UnitOfWork(string contextConnection, string contextDatabase, bool contextSupportTransaction, RepositoryConfig repositoryConfig)
+        public UnitOfWork(string contextConnection, bool contextSupportTransaction, RepositoryConfig repositoryConfig)
         {
             _contextConnection = contextConnection;
-            _contextDatabase = contextDatabase;
             _contextSupportTransaction = contextSupportTransaction;
             _repositoryConfig = repositoryConfig;
         }
@@ -26,7 +24,7 @@ namespace GameLoan.Infrastructure.Repository.UnitOfWork
         {
             get
             {
-                return _context ??= new GameLoanContext(_contextConnection, _contextDatabase, _contextSupportTransaction);
+                return _context ??= new GameLoanContext(_contextConnection, _contextSupportTransaction);
             }
         }
 

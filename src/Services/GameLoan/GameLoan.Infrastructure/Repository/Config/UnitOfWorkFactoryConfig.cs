@@ -2,8 +2,7 @@ namespace GameLoan.Infrastructure.Repository.Config
 {
     public class UnitOfWorkFactoryConfig
     {
-        public string Connection { get; set; }
-        public string Database { get; set; }
+        public string Connection { get; set; }        
         public bool SupportTransaction { get; set; }
     }
 }

@@ -23,12 +23,12 @@ namespace GameLoan.API.Options
 
     public SecurityKey SecurityKey
     {
-      get => _securityKey ?? (_securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_secretKey)));
+      get => _securityKey ??= new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_secretKey));
     }
 
     public SigningCredentials SigningCredentials
     {
-      get => _signingCredentials ?? (_signingCredentials = new SigningCredentials(SecurityKey, SecurityAlgorithms.HmacSha256));
+      get => _signingCredentials ??= new SigningCredentials(SecurityKey, SecurityAlgorithms.HmacSha256);
     }
   }
 }

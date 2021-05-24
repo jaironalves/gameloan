@@ -19,8 +19,8 @@ namespace GameLoan.IntegrationTests.API.Controllers
             //Arrange
             var request = new AuthenticateRequest()
             {
-                Login = "Teste",
-                Password = "Teste"
+                Login = "teste",
+                Password = "teste"
             };
 
             var requestJson = Json.Serialize(request);

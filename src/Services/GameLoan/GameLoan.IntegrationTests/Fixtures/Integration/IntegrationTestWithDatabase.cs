@@ -42,31 +42,30 @@ namespace GameLoan.IntegrationTests.Fixtures.Integration
             {
                 builder.ConfigureTestServices(services =>
                 {
-                    var descriptor = services
-                        .SingleOrDefault(d => d.ServiceType == typeof(IUnitOfWorkFactory));
+                    //var descriptor = services
+                    //    .SingleOrDefault(d => d.ServiceType == typeof(IUnitOfWorkFactory));
 
-                    services.Remove(descriptor);
+                    //services.Remove(descriptor);
 
-                    var mongoDbOptions = new MongoDbOptions()
-                    {
-                        Connection = dbFixture.ConnectionString,
-                        Database = "gameloan-test",
-                        SupportTransaction = false,
-                    };
+                    //var mongoDbOptions = new MongoDbOptions()
+                    //{
+                    //    Connection = dbFixture.ConnectionString,
+                    //    Database = "gameloan-test",
+                    //    SupportTransaction = false,
+                    //};
 
                     services.Configure<MongoDbOptions>(opts =>
                     {
-                        opts.Connection = mongoDbOptions.Connection;
-                        opts.Database = mongoDbOptions.Database;
-                        opts.SupportTransaction = mongoDbOptions.SupportTransaction;
+                        opts.Connection = dbFixture.Connection;
+                        opts.SupportTransaction = false;
                     });
 
-                    services.AddSingleton<IUnitOfWorkFactory>(provider =>
-                        new UnitOfWorkFactory(configure =>
-                        {
-                            configure.Connection = mongoDbOptions.Connection;
-                            configure.Database = mongoDbOptions.Database;
-                        }));
+                    //services.AddSingleton<IUnitOfWorkFactory>(provider =>
+                    //    new UnitOfWorkFactory(configure =>
+                    //    {
+                    //        configure.Connection = mongoDbOptions.Connection;
+                    //        configure.Database = mongoDbOptions.Database;
+                    //    }));
 
                 });
                 builder.UseEnvironment("Integration");
